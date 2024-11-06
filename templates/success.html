@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 성공</title>
+    <style>
+        body {
+            background-image: url('/static/loginbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .mytitle {
+            width: 300px; 
+            height: 100px;
+            color: white;
+            text-align: center; 
+            background-color: darkblue;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            padding-top: 20px;
+        }
+        .myimg {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        .login-info {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .login-info p {
+            margin: 10px 0;
+        }
+        .mybtn {
+            width: 300px;
+            height: 50px;            
+            background-color: skyblue;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-info">
+        <div class="mytitle">
+            <h1>*로그인 성공*</h1>
+        </div>
+        <div class="myimg">
+            <img src="static\loginimg.jpg" alt="로그인 이미지" style="width: 200px; height: 200px;">
+
+        </div>
+        <p style="color: white;">사번: {{ username }}</p>
+        <p style="color: white;">비밀번호: {{ password }}</p>
+
+    
+        <button class="mybtn" onclick="redirectToWorkstart()">출근</button>
+
+        <script>
+            function redirectToWorkstart() {
+                window.location.href = '/workstart';
+            }
+        </script>
+    </div>
+</body>
+</html>

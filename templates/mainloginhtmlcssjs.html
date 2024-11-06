@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+    <style>
+        body {
+            background-image: url('static/loginbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .mytitle {
+            width: 300px; 
+            height: 150px;
+            color: white;
+            text-align: center; 
+            background-color: darkblue;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            padding-top: 20px;
+        }
+        .wrap {  
+            width: 300px;
+            margin: auto;
+        }
+        .mybtn{
+            width: 300px;
+            height: 50px;            
+            background-color: skyblue;
+            border-radius: 10px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            height: 30px;
+            padding: 5px;
+            color: white;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid white;
+            outline: none;
+        }
+    </style>
+    <script>
+        function checkLogin() {
+            // 저장된 로그인 정보 (예: 사용자 ID와 비밀번호)
+            var storedId = "일취월장";
+            var storedPw = "1111";
+
+            // 사용자가 입력한 로그인 정보
+            var inputId = document.getElementsByName("id")[0].value;
+            var inputPw = document.getElementsByName("pw")[0].value;
+
+            // 로그인 정보 일치 여부 확인
+            if (inputId === storedId && inputPw === storedPw) {
+                // 로그인 정보 출력
+                alert("로그인 성공!\n사용자 ID: " + inputId + "\n비밀번호: " + inputPw);
+                window.location.href = '/success'
+            } else {
+                alert("로그인 실패! 입력한 정보가 일치하지 않습니다.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <form>
+    <div class="wrap">
+        <div class="mytitle">
+            <h1>감성항공사</h1>
+            <h5>사번과 비밀번호를 입력하세요.</h5>
+        </div>
+        <p>사번: <input type="text" name="id" required style="color: white;" /></p>
+        <p>비밀번호: <input type="password" name="pw" required style="color: white;" /></p>
+        <p><input type="button" class="mybtn" value="로그인" onclick="checkLogin()"/> </p>
+    </div>
+    </form>
+</body>
+</html>

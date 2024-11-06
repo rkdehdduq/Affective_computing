@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>업무 시작</title>
+    <style>
+        body {
+            background-image: url('/static/loginbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .mytitle {
+            width: 300px;
+            height: 100px;
+            color: white;
+            text-align: center;
+            background-color: rgb(0, 0, 139);
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            padding-top: 20px;
+        }
+        .myimg {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        .login-info {
+            text-align: center;
+            margin-bottom: 20px;
+
+        }
+        .login-info p {
+            margin: 10px 0;
+        }
+        .mybtn {
+            width: 300px;
+            height: 50px;
+            background-color: skyblue;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+        }
+        .mybtn2 {
+            width: 300px;
+            height: 50px;
+            background-color: skyblue;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="login-info">
+        <div class="mytitle">
+            <h1>업무 지원</h1>
+        </div>
+
+        <div class="myimg">
+            <img src="static\loginimg.jpg" alt="로그인 이미지" style="width: 200px; height: 200px;">
+
+        </div>
+        <p style="color: white;">사번: {{ username }}</p>
+        <p style="color: white;">비밀번호: {{ password }}</p>
+        
+        <button class="mybtn" onclick="detectEmotion()">감정 인식</button>
+        <button class="mybtn2" onclick="redirectToIndex()">업무 시작</button>
+        
+        <p id="emotionResult" class="emotion-result" style="font-size: 20px; font-weight: bold; color: blue;"></p>
+        <p id="feedback" class="feedback-text" style="font-size: 18px; color: green;"></p>
+        
+
+        <script>
+            function detectEmotion() {
+                fetch('/detect_emotion')
+                    .then(response => response.text())
+                    .then(result => {
+                        document.getElementById("emotionResult").innerHTML = "감정 인식 결과: " + result;
+                        
+                        <!--감정에 따른 조건문-->
+                        if (result.toLowerCase() === 'happy') {
+                            document.getElementById("feedback").innerHTML = "피드백: 안녕하세요! 일취월장님의 해피 바이러스로부터 감성항공사에 긍정적인 기운이 도는 것 같습니다! 최상의 컨디션으로 승객들을 맞이해볼까요?";
+                        } else if (result.toLowerCase() === 'angry' ){
+                            document.getElementById("feedback").innerHTML = "피드백: 일취월장님 안녕하세요! 많이 피곤해보이시네요. 탕비실에 구비되어 있는 커피나 달달한 간식을 드셔보세요! 기분 전환에 도움이 될 거에요 ";
+                        } else if (result.toLowerCase() === 'neutral'){
+                            document.getElementById("feedback").innerHTML = "피드백: 안녕하세요. 일취월장님! 오늘도 감성항공사와 함께 해주셔서 감사드립니다. 오늘도 화이팅하십쇼! ";
+                        } else if (result.toLowerCase() === 'sad'){
+                            document.getElementById("feedback").innerHTML = "피드백: 일취월장님 안녕하세요! 많이 피곤해보이시네요. 탕비실에 구비되어 있는 커피나 달달한 간식을 드셔보세요! 기분 전환에 도움이 될 거에요~ ";
+                        }
+
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+            function redirectToIndex() {
+                window.location.href = '/index';
+            }
+        </script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            var emotionPrediction = "";  // Variable to store the real-time emotion prediction
+            var maxEmotionPrediction = "";  // Variable to store the most frequent emotion prediction
+    
+            // Function to update the emotion labels
+            function updateEmotionPrediction() {
+                $.ajax({
+                    url: '/get_prediction',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        emotionPrediction = data.emotion;
+                        maxEmotionPrediction = data.most_frequent_emotion;
+    
+                        // Update the emotion predictions in the HTML
+                        document.getElementById("emotion-prediction").innerText = emotionPrediction;
+                        document.getElementById("max-emotion-prediction").innerText = maxEmotionPrediction;
+                        document.getElementById("emotion-prediction").style.color = "skyblue";
+                        document.getElementById("max-emotion-prediction").style.color = "skyblue";
+                        var maxEmotionSpan = document.getElementById("max-emotion-prediction");
+                        var maxEmotionText = maxEmotionSpan.innerText;
+                        
+                        if (maxEmotionText=== "Happy") {
+                            document.getElementById("feedback-text").style.color = "yellow";
+                            document.getElementById("feedback-text").innerText = "피드백: 고객님이 행복한 감정을 경험하고 있습니다. 행복한 감정을 극대화할 수 있도록 여행지 영상과 관련 광고 화면을 송출해주세요!";
+                            
+                            
+                            
+                        } else if(maxEmotionText === "Angry") {
+                            document.getElementById("feedback-text").style.color = "yellow";
+                            document.getElementById("feedback-text").innerText = "피드백: 고객님이 불편한 감정을 경험하고 있습니다. 도움이 필요한 듯 하다면 고객님께 다가가 구체적인 불만사항을 들어보고, 매뉴얼에 맞춰 불만을 해소해주세요. 웃는 얼굴과 친절한 응대는 필수입니다!";
+                            
+                           
+                        } else if(maxEmotionText === "Fear") {
+                            document.getElementById("feedback-text").style.color = "yellow";
+                            document.getElementById("feedback-text").innerText = "피드백: 고객님께 두려운 표정이 나타나고 있습니다. 고객이 비행공포증이 있을 수 있으니, 고객님께 다가가 도움이 필요한지 들어보고, 귀마개와 따뜻한 물을 제공해주세요!";
+                            
+                           
+                        } else if(maxEmotionText === "Surprised") {
+                            document.getElementById("feedback-text").style.color = "yellow";
+                            document.getElementById("feedback-text").innerText = "피드백: 고객님이 놀란 표정을 보였습니다. 주변에 돌발상황 발생 가능성이 있으니, 예의주시하고 즉시 문제 해결이 가능하도록 대기해주세요!";
+                            
+                            
+                        } 
+
+                    
+                    
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            }
+    
+            // Function to display the maximum emotion prediction
+            function displayMaxEmotionPrediction() {
+                document.getElementById("max-emotion-prediction").innerText = maxEmotionPrediction;
+            }
+    
+            // Polling interval in milliseconds (e.g., 1 second = 1000 milliseconds)
+            var pollingInterval = 0.01;
+    
+            // Start the polling
+            setInterval(updateEmotionPrediction, pollingInterval);
+    
+            // Start the display of the maximum emotion prediction after 5 seconds (5000 milliseconds)
+            setTimeout(displayMaxEmotionPrediction, 5000);
+        </script>
+    
+        
+
+        <style>
+            body {
+                background-image: url('/static/loginbackground.jpg');
+                background-size: cover;
+                background-position: center;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150vh;
+            }
+            
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mytitle {
+                width: 300px;
+                height: 100px;
+                color: white;
+                text-align: center;
+                background-color: rgb(0, 0, 139);
+                background-size: cover;
+                background-position: center;
+                border-radius: 10px;
+                padding-top: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .myvideo {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            
+            #video {
+                width: 400px;
+                height: 300px;
+            }
+            
+            .emotion-result {
+                font-size: 15px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                width: 300px;
+                height: 50px;
+                background-color: skyblue;
+                border-radius: 10px;
+                margin: 20px auto;
+                display: block;
+            }
+            
+            .myMaxresult {
+                font-size: 15px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                width: 300px;
+                height: 50px;
+                background-color: skyblue;
+                border-radius: 10px;
+                margin: 20px auto;
+                display: block;
+            }
+            
+            .feedback-image {
+                width: 100px;
+                height: 100px;
+                background-size: cover;
+                background-position: center;
+                margin-bottom: 10px;
+            }
+            
+            .feedback-text {
+                font-size: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                color:yellow;
+                
+            }
+        </style>
+
+
+</head>
+
+
+
+
+<body>
+    <div class="container">
+        <div class="mytitle">
+            <h1>객실 상황</h1>
+        </div>
+        <div class="myvideo">
+            <img id="video" src="{{ url_for('video_feed') }}" />
+        </div>
+
+        <div class= "emotion-result">
+            <h2>감정 인식 결과:</h2>
+        </div>
+        <ul>
+            <li><span id="emotion-prediction"></span></li>
+        </ul>
+
+        <div class="myMaxresult">
+            <h2>최대 감정 인식 결과:</h2>
+        </div>
+        <ul>
+            <span id="max-emotion-prediction"></span>
+        </ul>
+
+
+
+
+        <div class="feedback-text">
+            <h2>*피드백*</h2>
+        </div>
+        <ul>
+            <span id="feedback-text" style="font-size: 20px;"></span>
+        </ul>
+
+        <div class="feedback-text">
+            <h2><span id="feedback-text" style="font-size: 20px;"></span></h2>
+        </div>
+
+    </div>
+
+    
+
+</body>
+</html>
